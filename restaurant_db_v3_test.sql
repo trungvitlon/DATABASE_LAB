@@ -36,7 +36,7 @@ SELECT * FROM find_table();
 
 -- Bước 2: Tạo bàn đặt
 -- reserved_table(table_id)
-SELECT reserved_table(1);
+SELECT reserved_table(6);
 SELECT * FROM restaurant_table; -- status -> Reserved
 SELECT * FROM reservation; -- bàn đặt được thêm vào 
 
@@ -56,7 +56,7 @@ SELECT * FROM menu_item;
 
 -- Bước 6: Thêm món vào order 
 -- add_order_detail(order_id, menu_item_id, quantity)
-SELECT add_order_detail(1, 2, 2);
+SELECT add_order_detail(1, 4, 2);
 SELECT * FROM order_detail; -- order_detail được thêm vào
 SELECT * FROM reservation;  -- tổng tiền được cập nhật 
 
