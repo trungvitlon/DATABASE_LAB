@@ -22,14 +22,6 @@ CREATE TABLE role (
 	salary NUMERIC(10,2) NOT NULL CHECK (salary >= 0)
 );
 
--- Shift
-CREATE TABLE shift (
-	shift_id INT PRIMARY KEY,
-	shift_name VARCHAR(20) NOT NULL,
-	start_time TIME,
-	end_time TIME
-);
-
 -- Manager
 CREATE TABLE manager (
 	manager_id INT PRIMARY KEY,
@@ -131,15 +123,6 @@ CREATE TABLE payment (
 	final_price NUMERIC(10,2),
 	reservation_id INT NOT NULL,
 	FOREIGN KEY (reservation_id) REFERENCES reservation(reservation_id)
-);
-
--- Schedule 
-CREATE TABLE schedule (
-	schedule_id INT PRIMARY KEY,
-	employee_id INT NOT NULL,
-	shift_id INT NOT NULL,
-	FOREIGN KEY (employee_id) REFERENCES employee(employee_id),
-	FOREIGN KEY (shift_id) REFERENCES shift(shift_id)
 );
 
 -- ===========
@@ -246,48 +229,40 @@ INSERT INTO role VALUES
 (4, 'Cleaner', 1000.00),
 (5, 'Cashier', 1500.00);
 
--- shift(id, name, start_time, end_time)
-INSERT INTO shift VALUES
-(1, 'Morning', '08:00', '12:00'),
-(2, 'Afternoon', '12:00', '16:00'),
-(3, 'Evening', '16:00', '20:00'),
-(4, 'Night', '20:00', '00:00'),
-(5, 'Full', '08:00', '20:00');
-
 -- employee(id, first_name, last_name, birth_date, phone_number, address, start_date, role_id, branch_id)
 INSERT INTO employee VALUES
 (1, 'Tran', 'Viet', '1988-04-25', '0918726112', 'Ha Noi', '2023-05-03', 1, 1),
 (2, 'Nguyen', 'Duc', '1989-05-09', '0981763223', 'Hai Phong', '2021-04-17', 1, 2),
-(3, 'Dao', 'Anh', '1981-07-12', '0918726263', 'Ha Noi', '2021-07-17', 1, 3),
+(3, 'Dao', 'Anh', '1985-07-12', '0918726263', 'Ha Noi', '2021-07-17', 1, 3),
 (4, 'Tran', 'Minh', '1985-12-15', '0918723663', 'Da Nang', '2021-04-17', 1, 4),
 (5, 'Van', 'Hoa', '1993-08-14', '0912651299', 'Hai Phong', '2024-09-16', 1, 5),
 (6, 'Le', 'Trang', '1995-11-11', '0967445176', 'Da Nang', '2023-07-06', 1, 6),
-(7, 'Tran', 'Long', '1988-04-21', '0918278238', 'Ha Noi', '2022-04-09', 1, 1),
+(7, 'Tran', 'Long', '1998-04-21', '0918278238', 'Ha Noi', '2022-04-09', 1, 1),
 (8, 'Nguyen', 'Trang', '1989-05-03', '0981761267', 'Hai Phong', '2021-04-02', 1, 2),
 (9, 'Dao', 'Hai', '1993-08-19', '0912601293', 'Hai Phong', '2021-05-12', 2, 1),
 (10, 'Le', 'Duc', '1995-11-14', '0967445176', 'Da Nang', '2022-03-01', 2, 2),
-(11, 'Tran', 'Manh', '1988-04-26', '0918264112', 'Ha Noi', '2021-02-14', 2, 3),
+(11, 'Tran', 'Manh', '1998-04-26', '0918264112', 'Ha Noi', '2021-02-14', 2, 3),
 (12, 'Nguyen', 'Binh', '1989-05-12', '0972043223', 'Hai Phong', '2024-01-06', 2, 4),
 (13, 'Dao', 'Minh', '1981-07-15', '0918937463', 'Ha Noi', '2022-06-19', 2, 5),
-(14, 'Tran', 'Nam', '1985-12-19', '0918276463', 'Da Nang', '2021-06-16', 2, 6),
+(14, 'Tran', 'Nam', '1987-12-19', '0918276463', 'Da Nang', '2021-06-16', 2, 6),
 (15, 'Van', 'Nam', '1993-08-24', '0912194599', 'Hai Phong', '2023-04-08', 2, 1),
 (16, 'Le', 'Linh', '1995-11-01', '0967871276', 'Da Nang', '2021-04-02', 2, 2),
-(17, 'Tran', 'Khoi', '1988-04-20', '0918726112', 'Ha Noi', '2023-05-12', 2, 3),
+(17, 'Tran', 'Khoi', '1992-04-20', '0918726112', 'Ha Noi', '2023-05-12', 2, 3),
 (18, 'Nguyen', 'Hien', '1989-05-19', '0981823923', 'Hai Phong', '2025-08-17', 2, 4),
 (19, 'Tran', 'Dung', '1985-12-10', '0918274663', 'Da Nang', '2024-08-17', 2, 5),
 (20, 'Dao', 'Yen', '1993-08-11', '0912656492', 'Hai Phong', '2024-03-06', 2, 6),
 (21, 'Le', 'Binh', '1995-11-17', '0967448713', 'Da Nang', '2020-04-08', 3, 1),
 (22, 'Van', 'Dung', '1989-05-04', '0981728323', 'Hai Phong', '2022-05-13', 3, 2),
-(23, 'Dao', 'An', '1981-07-11', '0912128263', 'Ha Noi', '2021-04-06', 3, 3),
-(24, 'Tran', 'Tuan', '1985-12-05', '0972193663', 'Da Nang', '2023-04-04', 3, 4),
+(23, 'Dao', 'An', '1991-07-11', '0912128263', 'Ha Noi', '2021-04-06', 3, 3),
+(24, 'Tran', 'Tuan', '1990-12-05', '0972193663', 'Da Nang', '2023-04-04', 3, 4),
 (25, 'Dao', 'Tuan', '1993-08-04', '0912672919', 'Hai Phong', '2021-07-17', 3, 5),
 (26, 'Le', 'Long', '1995-11-18', '0967487916', 'Da Nang', '2022-07-04', 3, 6),
-(27, 'Van', 'Khai', '1988-04-23', '0918720112', 'Ha Noi', '2023-09-17', 4, 1),
+(27, 'Van', 'Khai', '1994-04-23', '0918720112', 'Ha Noi', '2023-09-17', 4, 1),
 (28, 'Nguyen', 'Thanh', '1989-05-07', '0981810323', 'Hai Phong', '2023-02-18', 4, 2),
-(29, 'Tran', 'Phuong', '1985-12-19', '0918810363', 'Da Nang', '2021-12-08', 4, 3),
+(29, 'Tran', 'Phuong', '1993-12-19', '0918810363', 'Da Nang', '2021-12-08', 4, 3),
 (30, 'Dao', 'Tien', '1993-08-12', '0912661039', 'Hai Phong', '2022-03-12', 4, 4),
-(31, 'Do', 'Yen', '1987-07-10', '0912173913', 'Ha Noi', '2021-03-06', 4, 5),
-(32, 'Tran', 'Khoa', '1986-02-05', '0993713663', 'Da Nang', '2023-04-14', 4, 6);
+(31, 'Do', 'Yen', '1997-07-10', '0912173913', 'Ha Noi', '2021-03-06', 4, 5),
+(32, 'Tran', 'Khoa', '1996-02-05', '0993713663', 'Da Nang', '2023-04-14', 4, 6);
 
 -- ============
 -- ADD FUNCTION
@@ -369,22 +344,6 @@ BEGIN
 
 	INSERT INTO restaurant_table(table_id, seat_count, status)
 	VALUES (new_table_id, p_seat_count, 'Available');
-END;
-$$ LANGUAGE plpgsql;
-
--- SCHEDULE
-CREATE OR REPLACE FUNCTION add_schedule(
-	p_employee_id INT,
-	p_shift_id INT
-)
-RETURNS VOID AS $$
-DECLARE
-	new_schedule_id INT;
-BEGIN
-	SELECT COALESCE(MAX(schedule_id), 0) + 1 INTO new_schedule_id FROM schedule;
-
-	INSERT INTO schedule(schedule_id, employee_id, shift_id)
-	VALUES (new_schedule_id, p_employee_id, p_shift_id);
 END;
 $$ LANGUAGE plpgsql;
 

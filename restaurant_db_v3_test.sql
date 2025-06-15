@@ -67,7 +67,7 @@ SELECT * FROM payment; -- payment được thêm vào
 SELECT * FROM reservation;  -- status -> Paid 
 SELECT * FROM restaurant_table; -- status -> Available
 
-
+SELECT * FROM branch;
 
 
 
