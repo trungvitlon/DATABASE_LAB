@@ -72,3 +72,55 @@ BEGIN
     WHERE table_id = p_table_id;
 END;
 $$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION process_payment(p_reservation_id INT, p_method VARCHAR)
+RETURNS VOID AS $$
+DECLARE
+    total NUMERIC;
+    new_payment_id INT;
+BEGIN
+    -- Lấy tổng số tiền từ reservation
+    SELECT total_amount INTO total
+    FROM reservation
+    WHERE reservation_id = p_reservation_id;
+
+    -- Sinh payment_id mới = max + 1
+    SELECT COALESCE(MAX(payment_id), 0) + 1 INTO new_payment_id
+    FROM payment;
+
+    -- Chèn vào bảng payment
+    INSERT INTO payment (
+        payment_id,
+        payment_method,
+        final_price,
+        reservation_id
+    ) VALUES (
+        new_payment_id,
+        p_method,
+        total,
+        p_reservation_id
+    );
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION get_customer_reservation_history(p_customer_id INT)
+RETURNS TABLE (
+    reservation_id INT,
+    reserved_date DATE,
+    start_time TIME,
+    total_amount NUMERIC
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT
+        r.reservation_id,
+        r.reserved_date,
+        r.start_time,
+        r.total_amount
+    FROM reservation r
+    WHERE r.customer_id = p_customer_id
+    ORDER BY r.reserved_date DESC;
+END;
+$$ LANGUAGE plpgsql;
