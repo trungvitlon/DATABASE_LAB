@@ -23,6 +23,22 @@ END;
 $$ LANGUAGE plpgsql;
 
 
+CREATE OR REPLACE FUNCTION get_average_employee_age()
+RETURNS NUMERIC AS $$
+DECLARE
+    avg_age NUMERIC;
+BEGIN
+    SELECT AVG(EXTRACT(YEAR FROM AGE(CURRENT_DATE, birth_date)))
+    INTO avg_age
+    FROM employee
+    WHERE birth_date IS NOT NULL;
+
+    RETURN avg_age;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
 CREATE OR REPLACE FUNCTION create_order(
     p_order_id INT,
     p_order_time TIME,
