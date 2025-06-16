@@ -42,12 +42,12 @@ SELECT * FROM reservation; -- bàn đặt được thêm vào
 
 -- Bước 3: Cập nhật bàn đặt khi khách đến
 -- update_reseravtion_table(reservation_id, customer_id)
-SELECT update_reservation_table(1, 1);
+SELECT update_reservation_table(3, 3);
 SELECT * FROM reservation;  -- status -> Active -> Có thể gọi mọn 
 
 -- Bước 4: Tạo order 
 -- add_order(reservation_id)
-SELECT add_order(1);
+SELECT add_order(4);
 SELECT * FROM orders; -- order được thêm vào 
 
 -- Bước 5: Xem menu
@@ -56,18 +56,28 @@ SELECT * FROM menu_item;
 
 -- Bước 6: Thêm món vào order 
 -- add_order_detail(order_id, menu_item_id, quantity)
-SELECT add_order_detail(1, 4, 2);
+SELECT add_order_detail(3, 5, 1);
 SELECT * FROM order_detail; -- order_detail được thêm vào
 SELECT * FROM reservation;  -- tổng tiền được cập nhật 
 
 -- Bước 7: Thanh toán 
 -- add_payment(reservation_id, payment_method)
-SELECT add_payment(1, 'Credit Card');
+SELECT add_payment(3, 'Credit Card');
 SELECT * FROM payment; -- payment được thêm vào 
 SELECT * FROM reservation;  -- status -> Paid 
 SELECT * FROM restaurant_table; -- status -> Available
 
 SELECT * FROM branch;
+
+
+
+
+
+
+
+
+
+
 
 
 
