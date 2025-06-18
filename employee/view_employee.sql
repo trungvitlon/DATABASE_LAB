@@ -1,4 +1,5 @@
 DROP VIEW IF EXISTS view_active_tables;
+
 CREATE OR REPLACE VIEW view_active_tables AS
 SELECT
     rt.table_id,
@@ -8,7 +9,7 @@ SELECT
     b.address AS branch_address
 FROM restaurant_table rt
 JOIN branch b ON rt.branch_id = b.branch_id
-WHERE LOWER(rt.status) IN ('đã đặt', 'đang sử dụng');
+WHERE LOWER(rt.status) = 'reserved';
 -------------
 
 DROP VIEW IF EXISTS view_reservations_today;
