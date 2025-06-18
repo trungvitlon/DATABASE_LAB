@@ -67,7 +67,13 @@ CREATE OR REPLACE FUNCTION set_table_status(
     p_status VARCHAR
 ) RETURNS VOID AS $$
 BEGIN
+    -- Cập nhật trạng thái của bàn
     UPDATE restaurant_table
+    SET status = p_status
+    WHERE table_id = p_table_id;
+
+    -- Cập nhật trạng thái của các reservation có liên quan đến bàn
+    UPDATE reservation
     SET status = p_status
     WHERE table_id = p_table_id;
 END;
