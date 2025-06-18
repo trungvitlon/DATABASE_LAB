@@ -67,15 +67,28 @@ CREATE OR REPLACE FUNCTION set_table_status(
     p_status VARCHAR
 ) RETURNS VOID AS $$
 BEGIN
-    -- Cập nhật trạng thái của bàn
+    -- Cập nhật trạng thái bàn
     UPDATE restaurant_table
     SET status = p_status
     WHERE table_id = p_table_id;
 
-    -- Cập nhật trạng thái của các reservation có liên quan đến bàn
-    UPDATE reservation
-    SET status = p_status
-    WHERE table_id = p_table_id;
+    -- Cập nhật reservation.status tương ứng với restaurant_table.status
+    IF p_status = 'Reserved' THEN
+        UPDATE reservation
+        SET status = 'Pending'
+        WHERE table_id = p_table_id;
+
+    ELSIF p_status = 'Occupied' THEN
+        UPDATE reservation
+        SET status = 'Active'
+        WHERE table_id = p_table_id;
+
+    ELSIF p_status = 'Available' THEN
+        UPDATE reservation
+        SET status = 'Paid'  -- hoặc 'Cancelled' tùy logic
+        WHERE table_id = p_table_id;
+
+    END IF;
 END;
 $$ LANGUAGE plpgsql;
 
